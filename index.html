@@ -28,6 +28,7 @@
         }
         .mono { font-family: 'JetBrains Mono', monospace; }
         
+        /* STICKY BILLING: Strictly hidden on landing */
         #sticky-billing { 
             position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); 
             z-index: 100; width: 95%; max-width: 500px; display: none !important; 
@@ -47,16 +48,6 @@
         .modern-textarea:focus { border-color: var(--primary); background: #ffffff; }
         .image-gallery::-webkit-scrollbar { height: 4px; }
         .image-gallery::-webkit-scrollbar-thumb { background: #d8b4fe; border-radius: 10px; }
-
-        .file-input-wrapper {
-            position: relative;
-            background: #f3f4f6;
-            padding: 1rem;
-            border-radius: 1rem;
-            border: 2px dashed #d1d5db;
-            text-align: center;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body class="p-4 md:p-12 lg:p-20">
@@ -71,6 +62,7 @@
                 <p>"Transforming digital fragments into visual poetry."</p>
             </div>
         </header>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bento-card p-10 rounded-[2.5rem] md:col-span-2">
                 <h3 class="mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-8 underline underline-offset-8">Operational Framework</h3>
@@ -82,12 +74,15 @@
                     </ul>
                 </div>
             </div>
+            
             <div class="bento-card p-10 rounded-[2.5rem] bg-slate-900 text-white flex flex-col justify-between">
                 <div>
                     <span class="mono text-[10px] font-bold text-purple-400 uppercase tracking-[0.3em]">Status Open</span>
                     <p class="text-2xl font-bold mt-4 tracking-tight">Ready to Avail?</p>
                 </div>
-                <button onclick="startOrder()" class="mt-12 bg-purple-600 hover:bg-purple-500 text-white font-black py-5 rounded-2xl transition-all uppercase text-[11px] tracking-[0.3em] active:scale-95">Initialize Order</button>
+                <button onclick="startOrder()" class="mt-12 bg-purple-600 hover:bg-purple-500 text-white font-black py-5 rounded-2xl transition-all uppercase text-[11px] tracking-[0.3em] active:scale-95">
+                    Initialize Order
+                </button>
             </div>
         </div>
     </div>
@@ -99,33 +94,22 @@
             <button onclick="location.reload()" class="text-[10px] uppercase font-black text-slate-400 hover:text-slate-900 transition tracking-widest">Terminate Session</button>
         </nav>
 
-        <section class="mb-16">
-            <p class="mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-6 underline underline-offset-8">PRICELIST</p>
-            <div class="image-gallery flex gap-6 overflow-x-auto pb-6">
-                <img src="1.png" class="h-64 rounded-2xl border shadow-sm">
-                <img src="2.png" class="h-64 rounded-2xl border shadow-sm">
-                <img src="3.png" class="h-64 rounded-2xl border shadow-sm">
-                <img src="4.png" class="h-64 rounded-2xl border shadow-sm">
-                <img src="5.png" class="h-64 rounded-2xl border shadow-sm">
-                <img src="6.png" class="h-64 rounded-2xl border shadow-sm">
-                <img src="7.png" class="h-64 rounded-2xl border shadow-sm">
-            </div>
-        </section>
-
         <form id="main-order-form" class="space-y-10">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- CLIENT INFO -->
                 <div class="bento-card p-8 rounded-[2.5rem] space-y-6">
                     <p class="mono text-[10px] font-bold uppercase tracking-widest text-slate-400">01 Client's Information</p>
                     <input type="text" id="client_name" required placeholder="Account Name" class="w-full bg-purple-50/40 p-5 rounded-2xl text-sm outline-none">
                     <input type="text" id="client_handle" required placeholder="Account Link (FB/IG/etc)" class="w-full bg-purple-50/40 p-5 rounded-2xl text-sm outline-none">
                 </div>
                 
+                <!-- ORDER DETAILS -->
                 <div class="bento-card p-8 rounded-[2.5rem] lg:col-span-2 space-y-6">
                     <p class="mono text-[10px] font-bold uppercase tracking-widest text-slate-400">02 Order Details</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input type="text" id="design_theme" required placeholder="Theme (e.g. Y2K, Minimalist)" class="w-full bg-purple-50/40 p-5 rounded-2xl text-sm outline-none">
                         <div class="space-y-2">
-                            <label class="text-[9px] uppercase font-bold text-slate-400">Reference Image</label>
+                            <label class="text-[9px] uppercase font-bold text-slate-400">Reference Image (Max 8MB)</label>
                             <input type="file" id="reference_file" accept="image/*" class="w-full text-xs">
                         </div>
                     </div>
@@ -133,11 +117,10 @@
                 </div>
             </div>
 
-            <!-- ALL 31+ ITEMS SECTION -->
             <div class="bento-card p-10 md:p-16 rounded-[3rem]">
                 <p class="mono text-[10px] font-bold uppercase tracking-[0.4em] text-slate-300 mb-14 text-center">ITEMS SECTION</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-12 mono text-[10px] font-bold uppercase tracking-tight">
-                    <!-- Col 1 -->
+                    <!-- Column 1 -->
                     <div class="space-y-12">
                         <div>
                             <p class="text-purple-600 border-b-2 border-purple-50 pb-3 mb-6 font-black tracking-widest">01 // Stamps & Stixx</p>
@@ -160,7 +143,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Col 2 -->
+                    <!-- Column 2 -->
                     <div class="space-y-12">
                         <div>
                             <p class="text-purple-600 border-b-2 border-purple-50 pb-3 mb-6 font-black tracking-widest">03 // Layouts</p>
@@ -179,27 +162,27 @@
                                 <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="qr merch" data-price="15" class="item-check mr-4"> qr merch</span> <span class="text-slate-200">15gc</span></label>
                                 <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="solo cover" data-price="15" class="item-check mr-4"> solo cover</span> <span class="text-slate-200">15gc</span></label>
                                 <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="duo cover" data-price="25" class="item-check mr-4"> duo cover</span> <span class="text-slate-200">25gc</span></label>
-                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="group cover" data-price="35" class="item-check mr-4"> group cover</span> <span class="text-slate-200">35gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="group cover ( 5 person (+2 if above) )" data-price="35" class="item-check mr-4"> group cover ( 5 person (+2 if above) )</span> <span class="text-slate-200">35gc</span></label>
                             </div>
                         </div>
                     </div>
-                    <!-- Col 3 -->
+                    <!-- Column 3 -->
                     <div class="space-y-12">
                         <div>
                             <p class="text-purple-600 border-b-2 border-purple-50 pb-3 mb-6 font-black tracking-widest">05 // Sets</p>
                             <div class="space-y-4">
-                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="seller 01" data-price="20" class="item-check mr-4"> seller 01</span> <span class="text-slate-200">20gc</span></label>
-                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="seller 02" data-price="30" class="item-check mr-4"> seller 02</span> <span class="text-slate-200">30gc</span></label>
-                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="seller 03" data-price="50" class="item-check mr-4"> seller 03</span> <span class="text-slate-200">50gc</span></label>
-                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="hood 01" data-price="30" class="item-check mr-4"> hood 01</span> <span class="text-slate-200">30gc</span></label>
-                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="hood 02" data-price="50" class="item-check mr-4"> hood 02</span> <span class="text-slate-200">50gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="seller 01 (pfp, cp, hl, pot, stamp)" data-price="20" class="item-check mr-4"> seller 01 (pfp, cp, hl, pot, stamp)</span> <span class="text-slate-200">20gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="seller 02 (pfp, cp, pinned, hl, pot, qr, stamp)" data-price="30" class="item-check mr-4"> seller 02 (pfp, cp, pinned, hl, pot, qr, stamp)</span> <span class="text-slate-200">30gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="seller 03 (pfp, cp, pinned, hl, pot, qr, stamp, pl)" data-price="50" class="item-check mr-4"> seller 03 (pfp, cp, pinned, hl, pot, qr, stamp, pl)</span> <span class="text-slate-200">50gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="hood 01 ( gc cover, gp cover )" data-price="30" class="item-check mr-4"> hood 01 ( gc cover, gp cover )</span> <span class="text-slate-200">30gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="hood 02 ( gc cover, gp cover, mem search )" data-price="50" class="item-check mr-4"> hood 02 ( gc cover, gp cover, mem search )</span> <span class="text-slate-200">50gc</span></label>
                             </div>
                         </div>
                         <div class="bg-purple-50 p-6 rounded-3xl border border-purple-100 italic">
                             <p class="text-purple-600 border-b border-purple-200 pb-2 mb-4 font-black tracking-widest">07 // Promo</p>
                             <div class="space-y-4 font-bold text-slate-600">
                                 <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="pot+qr" data-price="20" class="item-check mr-4"> pot + qr</span> <span class="text-purple-400">20gc</span></label>
-                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="stamp+pot+qr" data-price="25" class="item-check mr-4"> s + p + q</span> <span class="text-purple-400">25gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="stamp+pot+qr" data-price="25" class="item-check mr-4"> stamp+pot+qr</span> <span class="text-purple-400">25gc</span></label>
                                 <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="pot+pinned" data-price="25" class="item-check mr-4"> pot + pinned</span> <span class="text-purple-400">25gc</span></label>
                                 <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Item" value="pinned+wm+qr" data-price="30" class="item-check mr-4"> pinned+wm+qr</span> <span class="text-purple-400">30gc</span></label>
                             </div>
@@ -211,7 +194,7 @@
                     <p class="text-purple-600 mono text-[10px] font-black uppercase mb-8 tracking-[0.4em] text-center">06 // Others</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
                         <div class="space-y-4 mono text-[10px] font-bold">
-                            <label class="flex justify-between items-center p-2 hover:bg-purple-50 transition rounded-lg cursor-pointer"><span><input type="checkbox" name="Item" value="poster edit" data-price="30" class="item-check mr-4"> poster edit</span> <span class="text-slate-300">30gc</span></label>
+                            <label class="flex justify-between items-center p-2 hover:bg-purple-50 transition rounded-lg cursor-pointer"><span><input type="checkbox" name="Item" value="poster" data-price="30" class="item-check mr-4"> poster</span> <span class="text-slate-300">30gc</span></label>
                             <label class="flex justify-between items-center p-2 hover:bg-purple-50 transition rounded-lg cursor-pointer"><span><input type="checkbox" name="Item" value="udp temp" data-price="30" class="item-check mr-4"> udp temp</span> <span class="text-slate-300">30gc</span></label>
                             <label class="flex justify-between items-center p-2 hover:bg-purple-50 transition rounded-lg cursor-pointer">
                                 <span><input type="checkbox" name="Item" value="pricelist" data-price="5" class="item-check mr-4"> pricelist</span>
@@ -221,21 +204,21 @@
                                 </div>
                             </label>
                         </div>
-                        <textarea id="custom_desc" class="modern-textarea w-full" rows="4" placeholder="Specific technical instructions..."></textarea>
+                        <textarea id="custom_desc" class="modern-textarea w-full" rows="4" placeholder="Technical details..."></textarea>
                     </div>
                 </div>
             </div>
 
-            <!-- PAYMENT & FILE UPLOAD -->
+            <!-- PAYMENT & IMAGE UPLOAD -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 bento-card p-12 rounded-[3rem] flex flex-col md:flex-row justify-between items-center gap-12">
                     <div class="w-full md:w-1/2">
-                        <p class="text-xs font-black uppercase mb-3">Pay Here</p>
+                        <p class="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-widest">Pay Here</p>
                         <div class="bg-slate-900 text-white p-6 rounded-2xl mono text-xl font-bold">09161453006 [E.J.I.C]</div>
                     </div>
                     <div class="w-full md:w-1/2">
-                        <p class="mono text-[9px] font-bold text-slate-400 mb-4 uppercase">Upload G-Cash Receipt</p>
-                        <input type="file" id="receipt_file" accept="image/*" required class="w-full text-xs">
+                        <p class="mono text-[9px] font-bold text-slate-400 mb-4 uppercase">Upload G-Cash Image Receipt</p>
+                        <input type="file" id="receipt_file" accept="image/*" required class="w-full text-xs cursor-pointer">
                     </div>
                 </div>
                 <div class="bento-card p-12 rounded-[3rem] border-red-100 flex items-center">
@@ -339,7 +322,7 @@
 
             document.getElementById('receipt-content').innerHTML = `
                 <p>Client: ${name}</p><p>Handle: ${document.getElementById('client_handle').value}</p><p>Theme: ${document.getElementById('design_theme').value}</p><br>
-                <p class="font-bold">Items Ordered:</p>${selected.join('<br>')}`;
+                <p class="font-bold">Inventory:</p>${selected.join('<br>')}`;
             document.getElementById('receipt-total').innerText = totalDisp.innerText + " GC";
             document.getElementById('receipt-section').style.display = 'flex';
         }
@@ -361,18 +344,17 @@
                 }
             });
 
-            // JSON Metadata part
             const payload = {
                 content: "🚀 **NEW ORDER SUBMITTED**",
                 embeds: [{
                     title: "Lavender's Archive Form", color: 9133302,
                     fields: [
-                        { name: "👤 Client", value: document.getElementById('client_name').value, inline: true },
-                        { name: "🔗 Handle", value: document.getElementById('client_handle').value, inline: true },
+                        { name: "👤 Client", value: document.getElementById('client_name').value || "N/A", inline: true },
+                        { name: "🔗 Social Handle", value: document.getElementById('client_handle').value || "N/A", inline: true },
                         { name: "🎨 Theme", value: document.getElementById('design_theme').value || "None" },
                         { name: "📦 Items", value: selected.join("\n") },
-                        { name: "📝 Details", value: document.getElementById('inclusion_details').value || "None" },
-                        { name: "💰 Total", value: totalDisp.innerText + " GC", inline: true }
+                        { name: "📝 Technical Details", value: document.getElementById('inclusion_details').value || "None" },
+                        { name: "💰 Total Payable", value: totalDisp.innerText + " GC", inline: true }
                     ],
                     timestamp: new Date()
                 }]
@@ -380,22 +362,15 @@
 
             const formData = new FormData();
             formData.append('payload_json', JSON.stringify(payload));
-            
-            // Append files directly
-            if (receiptInput.files[0]) formData.append('file1', receiptInput.files[0], 'receipt.png');
-            if (referenceInput.files[0]) formData.append('file2', referenceInput.files[0], 'reference.png');
+            if (receiptInput.files[0]) formData.append('file1', receiptInput.files[0], 'receipt_image.png');
+            if (referenceInput.files[0]) formData.append('file2', referenceInput.files[0], 'reference_image.png');
 
             try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    body: formData
-                });
-                if(response.ok) { 
-                    alert("Images and Order sent successfully to Santi!"); 
-                    location.reload(); 
-                } else { throw new Error(); }
+                const response = await fetch(WEBHOOK_URL, { method: 'POST', body: formData });
+                if(response.ok) { alert("Images and Order sent successfully!"); location.reload(); }
+                else { throw new Error(); }
             } catch {
-                showError("Upload failed. Image might be too large (Limit is 8MB).");
+                showError("Upload failed. Image might be too large (Limit 8MB).");
                 btn.innerText = "Finalize Submission"; btn.disabled = false;
             }
         }

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDITING SERVICE | SANTI VIRELINTH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #8b5cf6; --bg: #fdfbff; --slate: #1f2937; }
+        body { 
+            background-color: var(--bg);
+            background-image: radial-gradient(#ddd6fe 0.5px, transparent 0.5px);
+            background-size: 30px 30px;
+            font-family: 'Inter', sans-serif;
+            color: var(--slate);
+            scroll-behavior: smooth;
+        }
+        .bento-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid #e9d5ff;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px -20px rgba(139, 92, 246, 0.15);
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .sticky-footer { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 100; width: 95%; max-width: 500px; display: none; }
+        input[type="checkbox"] { width: 1.1rem; height: 1.1rem; accent-color: var(--primary); cursor: pointer; }
+        #order-form-section, #receipt-section { display: none; }
+        .fade-in { animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Modern Textarea Design */
+        .modern-textarea {
+            background: rgba(245, 243, 255, 0.5);
+            border: 1px solid #ddd6fe;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            outline: none;
+            resize: none;
+        }
+        .modern-textarea:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.05);
+        }
+
+        .image-gallery::-webkit-scrollbar { height: 4px; }
+        .image-gallery::-webkit-scrollbar-thumb { background: #d8b4fe; border-radius: 10px; }
+    </style>
+</head>
+<body class="p-4 md:p-12 lg:p-20">
+
+    <!-- LANDING PAGE SECTION -->
+    <div id="landing-section" class="max-w-6xl mx-auto min-h-[85vh] flex flex-col justify-center fade-in">
+        <header class="mb-16">
+            <h1 class="text-[10px] font-black uppercase tracking-[0.7em] text-purple-400 mb-8">Lavenders Archive</h1>
+            <h2 class="text-6xl md:text-9xl font-black tracking-tighter text-slate-900 leading-none mb-10">EDITING <br>SERVICE</h2>
+            
+            <!-- QUOTES -->
+            <div class="space-y-1 text-slate-400 italic text-sm font-medium border-l-2 border-purple-200 pl-6">
+                <p>"Aesthetics is the silent language of precision."</p>
+                <p>"Transforming digital fragments into visual poetry."</p>
+                <p>"Where technical mastery meets creative vision."</p>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- PROTOCOLS -->
+            <div class="bento-card p-10 rounded-[2.5rem] md:col-span-2">
+                <h3 class="mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-8 underline underline-offset-8">Operational Framework</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-[11px] font-semibold uppercase tracking-wider leading-loose">
+                    <ul class="space-y-4">
+                        <li class="flex gap-4"><span class="text-purple-500">01</span> Standard Delivery: 3-5 Business Days.</li>
+                        <li class="flex gap-4"><span class="text-purple-500">02</span> Rush Priority: +10 GC Surcharge.</li>
+                        <li class="flex gap-4"><span class="text-purple-500">03</span> Payment Policy: Full or Half</li>
+                        <li class="flex gap-4"><span class="text-purple-500">04</span> PM me if you have other questions</li>
+                    </ul>
+                    <ul class="space-y-4 text-slate-400 font-medium">
+                        <li>Strict receipt verification protocol.</li>
+                        <li>Non-settlement results in blacklisting.</li>
+                        <li>Consultation available via Direct Message.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bento-card p-10 rounded-[2.5rem] bg-slate-900 text-white flex flex-col justify-between">
+                <div>
+                    <span class="mono text-[10px] font-bold text-purple-400 uppercase tracking-[0.3em]">Status Open</span>
+                    <p class="text-2xl font-bold mt-4 tracking-tight">Ready to Avail?</p>
+                </div>
+                <button onclick="startOrder()" class="mt-12 bg-purple-600 hover:bg-purple-500 text-white font-black py-5 rounded-2xl transition-all uppercase text-[11px] tracking-[0.3em] shadow-lg shadow-purple-900/20 active:scale-95">
+                    Initialize Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDER FORM SECTION -->
+    <div id="order-form-section" class="max-w-6xl mx-auto fade-in pb-32">
+        <nav class="flex justify-between items-center mb-12 border-b border-purple-100 pb-8">
+            <span class="mono text-[10px] font-bold uppercase tracking-[0.3em] text-purple-400 italic">ORDER FORM</span>
+            <button onclick="location.reload()" class="text-[10px] uppercase font-black text-slate-400 hover:text-slate-900 transition tracking-widest">Terminate Session</button>
+        </nav>
+
+        <!-- VISUAL PRICE DIRECTORY -->
+        <section class="mb-16">
+            <p class="mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-6 underline underline-offset-8">PRICELIST</p>
+            <div class="image-gallery flex gap-6 overflow-x-auto pb-6">
+                <img src="1.png" class="h-64 rounded-2xl border shadow-sm hover:scale-105 transition cursor-zoom-in" title="Stamps Reference">
+                <img src="2.png" class="h-64 rounded-2xl border shadow-sm hover:scale-105 transition cursor-zoom-in" title="Watermarks Reference">
+                <img src="3.png" class="h-64 rounded-2xl border shadow-sm hover:scale-105 transition cursor-zoom-in" title="Layouts Reference">
+                <img src="4.png" class="h-64 rounded-2xl border shadow-sm hover:scale-105 transition cursor-zoom-in" title="Templates Reference">
+                <img src="5.png" class="h-64 rounded-2xl border shadow-sm hover:scale-105 transition cursor-zoom-in" title="Sets Reference">
+                <img src="6.png" class="h-64 rounded-2xl border shadow-sm hover:scale-105 transition cursor-zoom-in" title="Others Reference">
+                <img src="7.png" class="h-64 rounded-2xl border shadow-sm hover:scale-105 transition cursor-zoom-in" title="Promo Reference">
+            </div>
+        </section>
+
+        <!-- OFFICIAL FORM -->
+        <form id="main-order-form" action="https://formspree.io/f/xnjbrwnl" method="POST" enctype="multipart/form-data" class="space-y-10">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- CLIENT INFO -->
+                <div class="bento-card p-8 rounded-[2.5rem] space-y-6 text-center lg:text-left">
+                    <p class="mono text-[10px] font-bold uppercase tracking-widest text-slate-400">01 Client's Information</p>
+                    <input type="text" name="Client_Name" required placeholder="Account Name" class="w-full bg-purple-50/40 p-5 rounded-2xl text-sm font-medium outline-none focus:ring-1 focus:ring-purple-400">
+                    <input type="text" name="Client_Account" required placeholder="Account Name/Link" class="w-full bg-purple-50/40 p-5 rounded-2xl text-sm font-medium outline-none focus:ring-1 focus:ring-purple-400">
+                </div>
+                
+                <!-- SPECS & INSPO -->
+                <div class="bento-card p-8 rounded-[2.5rem] lg:col-span-2 space-y-6">
+                    <p class="mono text-[10px] font-bold uppercase tracking-widest text-slate-400">02 Order Details</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" name="Design_Theme" required placeholder="Aesthetic Theme (e.g. Y2K, Minimalist)" class="w-full bg-purple-50/40 p-5 rounded-2xl text-sm font-medium outline-none focus:ring-1 focus:ring-purple-400">
+                        <div class="bg-purple-50/40 p-3 rounded-2xl">
+                            <label class="block text-[9px] font-black text-slate-400 uppercase mb-2 ml-2 tracking-widest">Multiple Assets Upload</label>
+                            <input type="file" name="Reference_Inspo" multiple class="text-[10px] w-full file:bg-white file:border-0 file:rounded-xl file:px-4 file:py-1 file:text-purple-600 file:font-bold cursor-pointer">
+                        </div>
+                    </div>
+                    <textarea name="Inclusion_Details" required class="modern-textarea w-full" rows="3" placeholder="Typography Inclusions (Names, Titles, specific texts to include in the edit...)"></textarea>
+                </div>
+            </div>
+
+            <!-- SERVICE DIRECTORY (31 OPTIONS) -->
+            <div class="bento-card p-10 md:p-16 rounded-[3rem]">
+                <p class="mono text-[10px] font-bold uppercase tracking-[0.4em] text-slate-300 mb-14 text-center">ITEMS SECTION</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-12 mono text-[10px] font-bold uppercase tracking-tight">
+                    <!-- Column 1 -->
+                    <div class="space-y-12">
+                        <div>
+                            <p class="text-purple-600 border-b-2 border-purple-50 pb-3 mb-6 font-black tracking-widest">01 // Stamps & Stixx</p>
+                            <div class="space-y-4">
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Stamps[]" value="1pc" data-price="5" class="item-check mr-4"> 1pc</span> <span class="text-slate-300">5gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Stamps[]" value="2pcs" data-price="5" class="item-check mr-4"> 2pcs</span> <span class="text-slate-300">5gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Stamps[]" value="3pcs" data-price="7" class="item-check mr-4"> 3pcs</span> <span class="text-slate-300">7gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Stamps[]" value="4pcs" data-price="8" class="item-check mr-4"> 4pcs</span> <span class="text-slate-300">8gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Stamps[]" value="5pcs" data-price="10" class="item-check mr-4"> 5pcs</span> <span class="text-slate-300">10gc</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-purple-600 border-b-2 border-purple-50 pb-3 mb-6 font-black tracking-widest">02 // Watermarks (Signatures)</p>
+                            <div class="space-y-4">
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="WM[]" value="1pc" data-price="2" class="item-check mr-4"> 1pc</span> <span class="text-slate-200">2gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="WM[]" value="2pcs" data-price="3" class="item-check mr-4"> 2pcs</span> <span class="text-slate-200">3gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="WM[]" value="3pcs" data-price="5" class="item-check mr-4"> 3pcs</span> <span class="text-slate-200">5gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="WM[]" value="4pcs" data-price="7" class="item-check mr-4"> 4pcs</span> <span class="text-slate-200">7gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="WM[]" value="5pcs" data-price="10" class="item-check mr-4"> 5pcs</span> <span class="text-slate-200">10gc</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="space-y-12">
+                        <div>
+                            <p class="text-purple-600 border-b-2 border-purple-50 pb-3 mb-6 font-black tracking-widest">03 // Layouts</p>
+                            <div class="space-y-4">
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Layouts[]" value="pfp+cp" data-price="10" class="item-check mr-4"> pfp + cp</span> <span class="text-slate-300">10gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Layouts[]" value="pfp+hl" data-price="15" class="item-check mr-4"> pfp + hl</span> <span class="text-slate-300">15gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Layouts[]" value="pfp+pinned" data-price="15" class="item-check mr-4"> pfp + pinned</span> <span class="text-slate-300">15gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Layouts[]" value="pinned+hl" data-price="20" class="item-check mr-4"> pinned + hl</span> <span class="text-slate-300">20gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Layouts[]" value="pfp+cp+hl" data-price="20" class="item-check mr-4"> pfp + cp + hl</span> <span class="text-slate-300">20gc</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-purple-600 border-b-2 border-purple-50 pb-3 mb-6 font-black tracking-widest">04 // Templates (seller or song cover artist)</p>
+                            <div class="space-y-4">
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Templates[]" value="pot" data-price="10" class="item-check mr-4"> pot</span> <span class="text-slate-200">10gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Templates[]" value="qr merch" data-price="15" class="item-check mr-4"> qr merch</span> <span class="text-slate-200">15gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Templates[]" value="solo cover" data-price="15" class="item-check mr-4"> solo cover</span> <span class="text-slate-200">15gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Templates[]" value="duo cover" data-price="25" class="item-check mr-4"> duo cover</span> <span class="text-slate-200">25gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Templates[]" value="group cover" data-price="35" class="item-check mr-4"> group cover</span> <span class="text-slate-200">35gc</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="space-y-12">
+                        <div>
+                            <p class="text-purple-600 border-b-2 border-purple-50 pb-3 mb-6 font-black tracking-widest">05 // Sets</p>
+                            <div class="space-y-4">
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Sets[]" value="seller1" data-price="20" class="item-check mr-4"> seller 01</span> <span class="text-slate-200">20gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Sets[]" value="seller2" data-price="30" class="item-check mr-4"> seller 02</span> <span class="text-slate-200">30gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Sets[]" value="seller3" data-price="50" class="item-check mr-4"> seller 03</span> <span class="text-slate-200">50gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Sets[]" value="hood1" data-price="30" class="item-check mr-4"> hood 01</span> <span class="text-slate-200">30gc</span></label>
+                                <label class="flex justify-between items-center cursor-pointer"><span><input type="checkbox" name="Sets[]" value="hood2" data-price="50" class="item-check mr-4"> hood 02</span> <span class="text-slate-200">50gc</span></label>
+                            </div>
+                        </div>
+                        <!-- PROMO ISOLATED -->
+                        <div class="bg-purple-50 p-6 rounded-3xl border border-purple-100 italic">
+                            <p class="text-purple-600 border-b border-purple-200 pb-2 mb-4 font-black tracking-widest">07 // Promo (March)</p>
+                            <div class="space-y-4 font-bold text-slate-600">
+                                <label class="flex justify-between items-center"><span><input type="checkbox" name="Promo[]" value="pot+qr" data-price="20" class="item-check mr-4"> pot + qr</span> <span class="text-purple-400">20gc</span></label>
+                                <label class="flex justify-between items-center"><span><input type="checkbox" name="Promo[]" value="s+p+q" data-price="25" class="item-check mr-4"> stamp+pot+qr</span> <span class="text-purple-400">25gc</span></label>
+                                <label class="flex justify-between items-center"><span><input type="checkbox" name="Promo[]" value="p+p" data-price="25" class="item-check mr-4"> pot + pinned</span> <span class="text-purple-400">25gc</span></label>
+                                <label class="flex justify-between items-center"><span><input type="checkbox" name="Promo[]" value="all" data-price="30" class="item-check mr-4"> pinned+wm+qr</span> <span class="text-purple-400">30gc</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 06: Others with Professional Message Box -->
+                <div class="mt-16 pt-10 border-t border-purple-50">
+                    <p class="text-purple-600 mono text-[10px] font-black uppercase mb-8 tracking-[0.4em] text-center">06 // Others</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+                        <div class="space-y-4 mono text-[10px] font-bold">
+                            <label class="flex justify-between items-center cursor-pointer p-2 hover:bg-purple-50 transition rounded-lg"><span><input type="checkbox" name="Others[]" value="poster" data-price="30" class="item-check mr-4"> poster edit</span> <span class="text-slate-300">30gc</span></label>
+                            <label class="flex justify-between items-center cursor-pointer p-2 hover:bg-purple-50 transition rounded-lg"><span><input type="checkbox" name="Others[]" value="udp" data-price="30" class="item-check mr-4"> udp temp</span> <span class="text-slate-300">30gc</span></label>
+                            <label class="flex justify-between items-center cursor-pointer p-2 hover:bg-purple-50 transition rounded-lg"><span><input type="checkbox" name="Others[]" value="pl" data-price="5" class="item-check mr-4"> pricelist</span> <span class="text-slate-300">5gc ea</span></label>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest ml-4">Unlisted Requirements Description</label>
+                            <textarea name="Custom_Order_Description" class="modern-textarea w-full" rows="4" placeholder="If you have an order not listed above, please specify all technical details here..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SETTLEMENT & RUSH -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bento-card p-12 rounded-[3rem] flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+                    <div class="w-full md:w-1/2">
+                        <p class="mono text-[9px] font-bold uppercase tracking-widest text-slate-400 mb-6">Pay Here</p>
+                        <p class="text-xs font-black text-slate-800 mb-3 uppercase tracking-widest">G-Cash Information</p>
+                        <div class="bg-slate-900 text-white p-6 rounded-2xl mono text-2xl tracking-[0.3em] font-bold">09161453006 [E.J.I.C]</div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <p class="mono text-[9px] font-bold uppercase tracking-widest text-slate-400 mb-6">Payment Receipt</p>
+                        <label class="block text-[10px] font-black mb-4 uppercase opacity-40">Upload Official Receipt</label>
+                        <input type="file" name="Receipt" required class="block w-full text-[10px] file:mr-5 file:py-3 file:px-8 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:bg-slate-100 file:text-slate-900 cursor-pointer uppercase transition-all hover:file:bg-purple-100">
+                    </div>
+                </div>
+
+                <div class="bento-card p-12 rounded-[3rem] border-red-100">
+                    <p class="mono text-[9px] font-bold uppercase tracking-widest text-red-400 mb-8">Priority Queue</p>
+                    <label class="flex justify-between items-center p-6 bg-red-50 rounded-[2rem] cursor-pointer hover:bg-red-100 transition-all">
+                        <span class="text-[10px] font-black text-red-600 flex items-center tracking-widest uppercase">
+                            <input type="checkbox" name="Rush" value="Applied" data-price="10" class="item-check mr-4 w-5 h-5"> 
+                            Priority Rush
+                        </span>
+                        <span class="mono text-xs font-black text-red-300">+10gc</span>
+                    </label>
+                </div>
+            </div>
+            
+            <p class="text-center text-[9px] font-bold text-slate-300 italic tracking-[0.4em] uppercase py-10">thank you for trusting & availing, have a nice day ♡</p>
+        </form>
+    </div>
+
+    <!-- STICKY BILLING MODULE (Authorized Order) -->
+    <div id="sticky-billing" class="sticky-footer bg-white/80 backdrop-blur-2xl border border-purple-100 p-5 rounded-[2.5rem] flex justify-between items-center shadow-2xl">
+        <div class="px-8 border-r border-slate-100">
+            <p class="mono text-[8px] font-black text-slate-400 uppercase tracking-widest">Calculated_Bill</p>
+            <p class="text-3xl font-black text-slate-900 tracking-tighter"><span id="total-val">0</span> <span class="text-xs font-normal text-slate-400">GC</span></p>
+        </div>
+        <button onclick="generateReceipt()" class="bg-purple-600 hover:bg-purple-700 text-white px-12 py-5 rounded-3xl text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95">
+            Submit
+        </button>
+    </div>
+
+    <!-- RECEIPT MODAL (THE CLIENT COPY) -->
+    <div id="receipt-section" class="fixed inset-0 z-[200] bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-6">
+        <div class="bento-card max-w-lg w-full p-10 rounded-[3rem] shadow-2xl relative fade-in">
+            <div class="text-center mb-8">
+                <h3 class="mono text-purple-600 font-bold text-lg italic tracking-widest">Order Receipt</h3>
+                <p class="text-[9px] text-gray-400 tracking-[0.5em] uppercase mt-2">Verified Transaction</p>
+            </div>
+            <div id="receipt-content" class="mono text-[11px] space-y-3 border-y border-dashed border-gray-200 py-6 mb-8 uppercase leading-relaxed text-slate-500">
+                <!-- Data injected via JS -->
+            </div>
+            <div class="flex justify-between items-center mb-10">
+                <p class="font-black text-xl tracking-tighter">TOTAL PAYABLE:</p>
+                <p id="receipt-total" class="font-black text-2xl text-purple-600 underline decoration-double"></p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="document.getElementById('receipt-section').style.display='none'" class="py-4 rounded-2xl bg-slate-100 text-slate-400 font-bold uppercase text-[9px] tracking-widest">Discard</button>
+                <button onclick="document.getElementById('main-order-form').submit()" class="py-4 rounded-2xl bg-purple-600 text-white font-black uppercase text-[10px] tracking-[0.2em] shadow-lg shadow-purple-900/20">Finalize Submission</button>
+            </div>
+            <p class="text-center text-[8px] text-gray-400 mt-8 italic uppercase tracking-widest">Capture a screenshot of this receipt for your reference.</p>
+        </div>
+    </div>
+
+    <script>
+        const checks = document.querySelectorAll('.item-check');
+        const totalDisp = document.getElementById('total-val');
+        const billingModule = document.getElementById('sticky-billing');
+
+        // Logic for total calculation
+        checks.forEach(c => {
+            c.addEventListener('change', () => {
+                let current = 0;
+                checks.forEach(i => { if (i.checked) current += parseInt(i.dataset.price); });
+                totalDisp.innerText = current;
+            });
+        });
+
+        // Toggle sections
+        function startOrder() {
+            document.getElementById('landing-section').classList.add('opacity-0');
+            setTimeout(() => {
+                document.getElementById('landing-section').style.display = 'none';
+                document.getElementById('order-form-section').style.display = 'block';
+                billingModule.style.display = 'flex';
+                window.scrollTo(0,0);
+            }, 500);
+        }
+
+        // Receipt Generator
+        function generateReceipt() {
+            let selected = [];
+            checks.forEach(i => { if(i.checked) selected.push(`// ${i.name.replace('[]','')} (${i.value}): ${i.dataset.price}gc`); });
+            if(selected.length === 0) return alert("Please select at least one item!");
+            
+            const clientName = document.querySelector('input[name="Client_Name"]').value || "Unidentified";
+            const handle = document.querySelector('input[name="Client_Account"]').value || "N/A";
+            const theme = document.querySelector('input[name="Design_Theme"]').value || "N/A";
+            const content = document.getElementById('receipt-content');
+            
+            content.innerHTML = `
+                <p>Client_ID: ${clientName}</p>
+                <p>Social: ${handle}</p>
+                <p>Theme_Config: ${theme}</p>
+                <br>
+                <p class="font-bold border-b border-gray-100 mb-2 text-slate-800 tracking-widest">Inventory_Breakdown:</p>
+                ${selected.join('<br>')}
+            `;
+            document.getElementById('receipt-total').innerText = totalDisp.innerText + " GC";
+            document.getElementById('receipt-section').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

@@ -274,7 +274,7 @@
     </div>
 
     <!-- STICKY BILLING MODULE (Authorized Order) -->
-    <div id="sticky-billing" class="sticky-footer bg-white/80 backdrop-blur-2xl border border-purple-100 p-5 rounded-[2.5rem] flex justify-between items-center shadow-2xl">
+    <div id="sticky-billing" style="display:none;" class="sticky-footer bg-white/80 backdrop-blur-2xl border border-purple-100 p-5 rounded-[2.5rem] flex justify-between items-center shadow-2xl">
         <div class="px-8 border-r border-slate-100">
             <p class="mono text-[8px] font-black text-slate-400 uppercase tracking-widest">Calculated_Bill</p>
             <p class="text-3xl font-black text-slate-900 tracking-tighter"><span id="total-val">0</span> <span class="text-xs font-normal text-slate-400">GC</span></p>
@@ -338,7 +338,7 @@
             if(selected.length === 0) return alert("Please select at least one item!");
             
             const clientName = document.querySelector('input[name="Client_Name"]').value || "Unidentified";
-            const handle = document.querySelector('input[name="Client_Account"]').value || "N/A";
+            const handle = document.querySelector('input[name="Client_Handle"]').value || "N/A";
             const theme = document.querySelector('input[name="Design_Theme"]').value || "N/A";
             const content = document.getElementById('receipt-content');
             
